@@ -1,0 +1,77 @@
+
+<div id="row">
+    <!-- Data akan ditampilkan di sini -->
+  </div>
+  
+  <script>
+    // Menggunakan Axios untuk mengambil data dari API
+    axios.get('apiOffice.php?endpoint=founder')
+      .then(function (response) {
+        var persons = response.data;
+  
+        // Mendapatkan elemen kontainer untuk daftar orang
+        var personList = document.getElementById('row');
+  
+        // Loop melalui data dan tambahkan setiap orang ke elemen kontainer
+        persons.forEach(function (person) {
+          var name = person.nama;
+          var image = 'img/office/' + person.gambar;
+          var title = person.rank;
+          var about = person.deskripsi;
+          var facebookLink = 'https://fb.com/';
+          var twitterLink = 'https://twitter.com/';
+          var instagramLink = 'https://instagram.com/';
+  
+          // Buat elemen untuk setiap orang
+          var article = document.createElement('article');
+          article.className = 'col-lg-6';
+  
+          var figure = document.createElement('figure');
+          figure.className = 'tm-person';
+  
+          var img = document.createElement('img');
+          img.src = image;
+          img.alt = 'Image';
+          img.className = 'img-fluid tm-person-img';
+  
+          var figcaption = document.createElement('figcaption');
+          figcaption.className = 'tm-person-description';
+  
+          var h4 = document.createElement('h4');
+          h4.className = 'tm-person-name';
+          h4.textContent = name;
+  
+          var pTitle = document.createElement('p');
+          pTitle.className = 'tm-person-title';
+          pTitle.textContent = title;
+  
+          var pAbout = document.createElement('p');
+          pAbout.className = 'tm-person-about';
+          pAbout.textContent = about;
+  
+          var socialLinks = document.createElement('div');
+          socialLinks.innerHTML = `
+            <a href="${facebookLink}" class="tm-social-link"><i class="fab fa-facebook tm-social-icon"></i></a>
+            <a href="${twitterLink}" class="tm-social-link"><i class="fab fa-twitter tm-social-icon"></i></a>
+            <a href="${instagramLink}" class="tm-social-link"><i class="fab fa-instagram tm-social-icon"></i></a>
+          `;
+  
+          // Menambahkan elemen-elemen ke dalam elemen kontainer orang
+          figcaption.appendChild(h4);
+          figcaption.appendChild(pTitle);
+          figcaption.appendChild(pAbout);
+          figcaption.appendChild(socialLinks);
+  
+          figure.appendChild(img);
+          figure.appendChild(figcaption);
+  
+          article.appendChild(figure);
+  
+          personList.appendChild(article);
+        });
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  </script>
+  
